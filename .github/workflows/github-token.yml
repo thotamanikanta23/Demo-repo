@@ -16,13 +16,18 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Specify the Node.js version
+        node-version: '16'
 
     - name: Install dependencies
       run: npm install
 
     - name: Run tests
       run: npm test
+
+    - name: Configure Git identity
+      run: |
+        git config --global user.email "thotamanikanta23@gmail.com"
+        git config --global user.name "thotamanikanta23"
 
     - name: Create a new branch and make a commit
       run: |
