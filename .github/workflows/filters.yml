@@ -1,0 +1,44 @@
+name: Filter with branch and path
+
+on:
+  push:
+    branches:
+      - main             
+      - 'develop'         
+   # paths:
+  #    - '!.github/workflows/**' 
+
+  pull_request:
+    branches:
+      - main               
+      - 'develop'        
+   # paths:
+   #   - '!.github/workflows/**' 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' 
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
