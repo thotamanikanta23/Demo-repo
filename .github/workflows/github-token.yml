@@ -42,12 +42,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
-    - name: Create a Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        title: 'New pull request'
-        body: 'Automated pull request created from GitHub Actions'
-        head: 'new-branch'
-        base: 'main'
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    
