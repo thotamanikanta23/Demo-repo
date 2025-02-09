@@ -10,9 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Trigger Workflow with Secrets
         uses: ./.github/workflows/reusable-secrets.yml
         with:
           param1: value1
           param2: value2
-
+        secrets:
+          MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
+          MY_SECRET_KEY_1: ${{ secrets.MY_SECRET_KEY_1 }}
