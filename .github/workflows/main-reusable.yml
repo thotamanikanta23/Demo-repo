@@ -15,6 +15,4 @@ jobs:
         with:
           param1: value1
           param2: value2
-        secrets:
-          MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
-          MY_SECRET_KEY_1: ${{ secrets.MY_SECRET_KEY_1 }}
+
