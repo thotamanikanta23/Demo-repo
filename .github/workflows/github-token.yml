@@ -34,11 +34,11 @@ jobs:
 
     - name: Create a new branch and make a commit
       run: |
-        git checkout -b new-branch
+        git checkout develop
         echo "New commit" > new-file.txt
         git add new-file.txt
         git commit -m "Adding new file"
-        git push origin new-branch
+        git push origin develop
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
