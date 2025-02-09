@@ -1,0 +1,48 @@
+name: Workflow with GITHUB_TOKEN
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        python -m unittest discover
+
+    - name: Create a new branch and make a commit
+      run: |
+        git checkout -b new-branch
+        echo "New commit" > new-file.txt
+        git add new-file.txt
+        git commit -m "Adding new file"
+        git push origin new-branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create a Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        title: 'New pull request'
+        body: 'Automated pull request created from GitHub Actions'
+        head: 'new-branch'
+        base: 'main'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
