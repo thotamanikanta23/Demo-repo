@@ -1,0 +1,51 @@
+name: Git Diff Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compare-diffs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+
+    - name: Set up Git
+      run: |
+        git fetch --all
+
+    - name: Get the latest commit hash from the base and head branch
+      run: |
+        BASE_COMMIT=$(git rev-parse origin/main)
+        HEAD_COMMIT=$(git rev-parse HEAD)
+        echo "BASE_COMMIT=${BASE_COMMIT}" >> $GITHUB_ENV
+        echo "HEAD_COMMIT=${HEAD_COMMIT}" >> $GITHUB_ENV
+
+    - name: Compare with two-dot diff (A..B)
+      run: |
+        git diff ${BASE_COMMIT}..${HEAD_COMMIT} > diff_two_dot.patch
+        cat diff_two_dot.patch
+
+    - name: Compare with three-dot diff (A...B)
+      run: |
+        git diff ${BASE_COMMIT}...${HEAD_COMMIT} > diff_three_dot.patch
+        cat diff_three_dot.patch
+
+    - name: Check if there are any changes
+      run: |
+        if [[ -s diff_two_dot.patch ]]; then
+          echo "There are changes in the two-dot diff"
+        else
+          echo "No changes in the two-dot diff"
+        fi
+        if [[ -s diff_three_dot.patch ]]; then
+          echo "There are changes in the three-dot diff"
+        else
+          echo "No changes in the three-dot diff"
+        fi
