@@ -1,0 +1,12 @@
+name: "Manikanta user"
+description: "Sends a message manikanta"
+inputs:
+  name:
+    description: "User's name"
+    required: true
+outputs:
+  message:
+    description: "The message from Manikanta"
+runs:
+  using: "node16"
+  main: "index.js"
