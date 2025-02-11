@@ -10,24 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2️⃣ Set an environment variable
       - name: Set Environment Variable
-        run: echo "MY_ENV_VAR=Hello Manikanta" >> $GITHUB_ENV
+        run: echo "MY_ENV_VAR=Hello GitHub Actions!" >> $GITHUB_ENV
 
-      # 3️⃣ Set an output variable
       - name: Set Output Variable
         id: output_step
-        run: echo "MY_OUTPUT_VAR=This is an output variable" >> $GITHUB_OUTPUT
+        run: echo "MY_OUTPUT_VAR=This is an output variable!" >> $GITHUB_OUTPUT
 
-      # 4️⃣ Mask a secret (to hide sensitive information in logs)
       - name: Mask Secret
         run: echo "::add-mask::SuperSecretPassword"
 
-      # 5️⃣ Group logs for better readability
       - name: Group Logs
         run: |
           echo "::group::Installing Dependencies"
@@ -36,45 +31,35 @@ jobs:
           echo "Installing package 3..."
           echo "::endgroup::"
 
-      # 6️⃣ Debug log message
       - name: Debug Message
         run: echo "::debug::This is a debug log message"
 
-      # 7️⃣ Warning, Notice and error messages
-      - name: Display Warning and Error
+      - name: Display Warning notice and Error
         run: |
           echo "::warning::This is a warning message"
           echo "::notice::This is a notice message"
           echo "::error::This is an error message"
 
-      # 8️⃣ Stop execution if an error occurs
       - name: Fail on Error
         run: |
           echo "::error::Something went wrong!"
           exit 1
-        continue-on-error: true  # Allows workflow to continue even if this step fails
+        continue-on-error: true
 
-      # 9️⃣ Add a custom directory to PATH
       - name: Add to PATH
         run: echo "/custom/bin" >> $GITHUB_PATH
 
-      # 🔟 Print all environment variables
       - name: Show Environment Variables
         run: env
 
-      # 1️⃣1️⃣ Upload an artifact (example file)
       - name: Create and Upload Artifact
         run: echo "Hello, this is an artifact!" > sample_artifact.txt
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload Artifact (Updated)
+        uses: actions/upload-artifact@v4
         with:
           name: my-artifact
           path: sample_artifact.txt
 
-      # 1️⃣2️⃣ Use the Output Variable from Previous Step
       - name: Use Output Variable
         run: echo "The output variable is '${{ steps.output_step.outputs.MY_OUTPUT_VAR }}'"
-
-
-
