@@ -1,0 +1,61 @@
+name: Workflow Commands
+
+on:
+  workflow_dispatch:
+
+jobs:
+  demo_workflow_commands:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Display debug, notice, warning, and error messages
+        run: |
+          echo "::debug::This is a debug message"
+          echo "::notice::This is a notice message"
+          echo "::warning::This is a warning message"
+          echo "::error::This is an error message"
+
+      - name: Grouping log messages
+        run: |
+          echo "::group::Grouped logs"
+          echo "Grouped log line 1"
+          echo "Grouped log line 2"
+          echo "::endgroup::"
+
+      - name: Mask sensitive values
+        run: |
+          echo "::add-mask::secret_value"
+          echo "The value 'secret_value' will be masked in logs"
+
+      - name: Stop and start logging
+        run: |
+          echo "::stop-commands::pause"
+          echo "This won't be logged"
+          echo "::pause::"
+
+      - name: Set environment variables
+        run: |
+          echo "MY_VAR=Hello GitHub Actions" >> $GITHUB_ENV
+          echo "Environment variable MY_VAR set"
+
+      - name: Set output parameters
+        id: set_output
+        run: |
+          echo "output_var=Workflow completed" >> $GITHUB_ENV
+          echo "::set-output name=my_output::Workflow execution successful"
+
+      - name: Add job summary
+        run: echo "Job Summary: Execution completed successfully." >> $GITHUB_STEP_SUMMARY
+
+      - name: Modify system PATH
+        run: |
+          echo "/custom/path" >> $GITHUB_PATH
+          echo "Added '/custom/path' to system PATH"
+
+      - name: Use output from a previous step
+        run: |
+          echo "Using output: ${{ steps.set_output.outputs.my_output }}"
+          
