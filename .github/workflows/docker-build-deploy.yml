@@ -1,4 +1,4 @@
-name: Docker Build & Deploy for Node.js App
+name: Docker Build & Deploy NodeJS
 
 on:
   push:
