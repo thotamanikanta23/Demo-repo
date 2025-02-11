@@ -1,0 +1,45 @@
+name: Trigger API Call Workflow
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  trigger_api:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Checkout the repository code (if needed)
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up environment variables (API URL, API Key, etc.)
+    - name: Set environment variables
+      run: |
+        echo "API_URL=https://yourworkfloworchestration.com/api/workflows/trigger" >> $GITHUB_ENV
+        echo "API_KEY=YOUR_API_KEY" >> $GITHUB_ENV
+        echo "USER_EMAIL=thotamanikanta23@gmail.com" >> $GITHUB_ENV
+        echo "USER_PASSWORD=MANI@thota-91" >> $GITHUB_ENV
+
+    # Step 3: Trigger the API call using curl
+    - name: Trigger the User Registration API
+      run: |
+        curl -X POST \
+          ${{ env.API_URL }} \
+          -H "Authorization: Bearer ${{ env.API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "workflow_name": "User Registration Workflow",
+            "parameters": {
+              "user_email": "${{ env.USER_EMAIL }}",
+              "user_password": "${{ env.USER_PASSWORD }}"
+            }
+          }'
+
+    # Optional: Step 4: Post-process the response
+    - name: Process API response
+      run: |
+        echo "API response successfully triggered"
+
+
