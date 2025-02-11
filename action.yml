@@ -1,12 +1,12 @@
-name: "Manikanta user"
-description: "Sends a message manikanta"
+name: "Greet User"
+description: "Sends a greeting message"
 inputs:
   name:
     description: "User's name"
     required: true
 outputs:
-  message:
-    description: "The message from Manikanta"
+  greeting:
+    description: "The greeting message"
 runs:
   using: "node16"
   main: "index.js"
