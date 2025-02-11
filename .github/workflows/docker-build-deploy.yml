@@ -76,3 +76,4 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@13.127.69.68 'docker pull ${{ secrets.DOCKER_USERNAME }}/my-node-app:${{ github.sha }} && docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/my-node-app:${{ github.sha }}'
 
+
