@@ -1,0 +1,51 @@
+workflow:
+  name: "User Registration Workflow"
+  description: "A workflow to register a new user, validate input, and send a welcome email"
+  
+  # Step 1: Pre-Action - Validate Input
+  - name: "Validate User Input"
+    type: "pre"
+    action: "validate_input"
+    description: "Ensure user input (email and password) is valid before registration"
+    parameters:
+      - name: "email"
+        value: "{{user_email}}"
+      - name: "password"
+        value: "{{user_password}}"
+    
+    # Condition: If validation fails, abort workflow.
+    condition:
+      success: "Proceed to registration"
+      failure: "Abort workflow - Invalid input"
+
+  # Step 2: Core Action - Register User
+  - name: "Register User"
+    type: "core"
+    action: "register_user"
+    description: "Register the new user in the system"
+    parameters:
+      - name: "email"
+        value: "{{user_email}}"
+      - name: "password"
+        value: "{{user_password}}"
+    
+    # Condition: If registration fails, abort workflow.
+    condition:
+      success: "User registered successfully"
+      failure: "Abort workflow - Registration failed"
+
+  # Step 3: Post-Action - Send Welcome Email
+  - name: "Send Welcome Email"
+    type: "post"
+    action: "send_welcome_email"
+    description: "Send a welcome email after successful registration"
+    parameters:
+      - name: "email"
+        value: "{{user_email}}"
+      - name: "template"
+        value: "welcome_template"  # Template identifier for the welcome email
+
+    # Condition: If email sending fails, log the error.
+    condition:
+      success: "Welcome email sent successfully"
+      failure: "Log error - Email sending failed"
