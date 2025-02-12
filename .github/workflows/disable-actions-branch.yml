@@ -1,0 +1,19 @@
+name: Disable Actions on Certain Branches
+
+on:
+  push:
+    branches:
+      - 'develop'  # Only trigger on push to 'develop' branch
+  pull_request:
+    branches:
+      - 'develop'  # Only trigger on PRs targeting 'develop' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run tests
+        run: |
+          echo "Running tests only on 'develop' branch"
