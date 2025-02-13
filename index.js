@@ -1,9 +1,19 @@
-const core = require("@actions/core");
+const core = require('@actions/core');
 
-try {
-  const name = core.getInput("name");
-  const message = `Hello, ${name}! Welcome to GitHub Actions.`;
-  core.setOutput("greeting", message);
-} catch (error) {
-  core.setFailed(error.message);
+async function run() {
+  try {
+    // Get the input 'name' from the workflow
+    const name = core.getInput('name');
+    
+    // Create the greeting message
+    const greeting = `Hello, ${name}! Welcome to the workflow!`;
+
+    // Output the greeting
+    core.setOutput('greeting', greeting);
+    console.log(greeting);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
+
+run();
