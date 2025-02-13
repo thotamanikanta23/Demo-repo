@@ -37,10 +37,10 @@ jobs:
           docker run --rm my-node-app:${{ github.sha }} npm test
 
       # Custom Action Step
-      - name: Greet the User
-        uses: ./  # Using the custom action defined in the root directory
-        with:
-          name: 'Manikanta'  # Input to the action
+    #  - name: Greet the User
+    #    uses: ./  # Using the custom action defined in the root directory
+   #     with:
+    #      name: 'Manikanta'  # Input to the action
 
   deploy:
     runs-on: ubuntu-latest
